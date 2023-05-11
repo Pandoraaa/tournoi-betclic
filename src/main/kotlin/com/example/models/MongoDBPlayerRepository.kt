@@ -1,36 +1,35 @@
 package com.example.models
 
-import org.litote.kmongo.coroutine.CoroutineCollection
-import org.litote.kmongo.coroutine.coroutine
-import org.litote.kmongo.reactivestreams.KMongo
+import com.mongodb.client.MongoCollection
+import org.litote.kmongo.*
 
 class MongoDBPlayerRepository : PlayerRepository {
 
-    private val client = KMongo.createClient().coroutine
+    private val client = KMongo.createClient()
 
     private val database = client.getDatabase("players")
 
-    private val players = database.getCollection<Player>()
+    private val playersCollection = database.getCollection<Player>()
 
-    override suspend fun addPlayer(player: Player) {
-        players.insertOne(player)
+    override fun addPlayer(player: Player) {
+        playersCollection.insertOne(player)
     }
 
-    override suspend fun getAllPlayersByRanking(): CoroutineCollection<Player> {
+    override fun getAllPlayersByRanking(): MongoCollection<Player> {
         // TODO ranking
-        return players
+        return playersCollection
     }
 
-    override suspend fun updatePlayerScore(player: Player) {
-        TODO("Not yet implemented")
+    override fun updatePlayerScore(player: Player) {
+        playersCollection.updateOneById(player.id, player.score)
     }
 
-    override suspend fun getPlayerById(id: Int): Player? {
-        return players.findOneById(id)
+    override fun getPlayerById(id: Int): Player? {
+        return playersCollection.findOneById(id)
     }
 
-    override suspend fun deleteAllPlayers() {
-        players.drop()
+    override fun deleteAllPlayers() {
+        playersCollection.drop()
     }
 
 }
