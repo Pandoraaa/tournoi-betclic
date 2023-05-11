@@ -7,9 +7,10 @@ import io.ktor.server.routing.*
 fun Route.playersRouting() {
     route("/players") {
         get {
+            // Repository KMongo get all
             call.respondText("Hello Betclic!")
         }
-        get("{name?}") {
+        get("{id?}") {
 
         }
         post {
