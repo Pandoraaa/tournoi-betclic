@@ -1,14 +1,14 @@
 package com.example.models
 
-import org.litote.kmongo.coroutine.coroutine
-import org.litote.kmongo.reactivestreams.KMongo
+interface PlayerRepository {
 
+    suspend fun addPlayer(player: Player)
 
-private val client = KMongo.createClient().coroutine
-private val database = client.getDatabase("PlayerDatabase")
+    suspend fun getAllPlayersByRanking(): Any
 
-private val players = database.getCollection<Player>()
+    suspend fun updatePlayerScore(player: Player)
 
-suspend fun getPlayerById(id: String): Player? {
-    return players.findOneById(id)
+    suspend fun getPlayerById(id: Int): Player?
+
+    suspend fun deleteAllPlayers()
 }
