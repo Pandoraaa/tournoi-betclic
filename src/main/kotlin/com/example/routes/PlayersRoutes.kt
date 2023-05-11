@@ -8,12 +8,13 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.playerRouting() {
+
     val mongoBD = MongoDBPlayerRepository()
     route("/players") {
         get {
             mongoBD.getAllPlayersByRanking()
         }
-        get("{id?}") {
+        get("/{id}") {
             val playerId = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
             val player = mongoBD.getPlayerById(playerId) ?: return@get call.respond(HttpStatusCode.NotFound)
             call.respond(player)

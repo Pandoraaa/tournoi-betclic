@@ -5,7 +5,9 @@ import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
 class MongoDBPlayerRepository : PlayerRepository {
+
     private val client = KMongo.createClient().coroutine
+
     private val database = client.getDatabase("players")
 
     private val players = database.getCollection<Player>()
