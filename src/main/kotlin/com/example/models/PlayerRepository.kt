@@ -4,7 +4,7 @@ interface PlayerRepository {
 
     fun addPlayer(player: Player)
 
-    fun getAllPlayersByRanking(): Any
+    fun getAllPlayersByScore(): Any
 
     fun updatePlayerScore(player: Player)
 

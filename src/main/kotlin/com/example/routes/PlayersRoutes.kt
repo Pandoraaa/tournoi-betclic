@@ -12,10 +12,10 @@ fun Route.playerRouting() {
     val mongoBD = MongoDBPlayerRepository()
     route("/players") {
         get {
-            mongoBD.getAllPlayersByRanking()
+            mongoBD.getAllPlayersByScore()
         }
         get("/{id}") {
-            val playerId = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
+            val playerId = call.parameters["id"]?.toInt() ?: return@get call.respond(HttpStatusCode.BadRequest)
             val player = mongoBD.getPlayerById(playerId) ?: return@get call.respond(HttpStatusCode.NotFound)
             call.respond(player)
         }
@@ -26,7 +26,8 @@ fun Route.playerRouting() {
         }
 
         put {
-
+            val player = call.receive<Player>()
+            mongoBD.updatePlayerScore(player)
         }
         delete {
             mongoBD.deleteAllPlayers()

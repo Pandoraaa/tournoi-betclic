@@ -1,5 +1,6 @@
 package com.example.models
 
+import com.mongodb.client.AggregateIterable
 import com.mongodb.client.MongoCollection
 import org.litote.kmongo.*
 
@@ -15,9 +16,10 @@ class MongoDBPlayerRepository : PlayerRepository {
         playersCollection.insertOne(player)
     }
 
-    override fun getAllPlayersByRanking(): MongoCollection<Player> {
-        // TODO ranking
-        return playersCollection
+    override fun getAllPlayersByScore(): AggregateIterable<Player> {
+        return playersCollection.aggregate<Player>(
+            sort(descending(Player::score))
+        )
     }
 
     override fun updatePlayerScore(player: Player) {
