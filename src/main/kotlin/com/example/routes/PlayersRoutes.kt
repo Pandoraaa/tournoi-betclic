@@ -1,38 +1,33 @@
 package com.example.routes
 
-import com.example.models.getPlayerById
-import com.example.requests.PlayerRequest
+import com.example.models.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.playersRouting() {
+fun Route.playerRouting() {
     route("/players") {
         get {
-            // Repository KMongo get all
-            call.respondText("Hello Betclic!")
+            MongoDBPlayerRepository.getAllPlayersByRanking()
         }
         get("{id?}") {
-            val playerId = call.receive<PlayerRequest>().id
-            val player = getPlayerById(playerId)
-            player?.let {
-                call.respond(
-                    HttpStatusCode.OK,
-                    it
-                )
-            } ?: call.respond(
-                HttpStatusCode.OK,
-                "There is no player with this id"
-            )
+            val playerId = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
+            val player = getPlayerById(playerId) ?: return@get call.respond(HttpStatusCode.NotFound)
+            call.respond(player)
         }
 
         post {
+            val player = call.receive<Player>()
+            addPlayer(player)
+        }
+
+        put {
 
         }
         delete {
-
+            deleteAllPlayers()
         }
     }
 }

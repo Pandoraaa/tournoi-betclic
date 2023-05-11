@@ -34,6 +34,6 @@ dependencies {
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
     // KMongo
-    implementation("org.litote.kmongo:kmongo-coroutine:4.8.0")
+    implementation("org.litote.kmongo:kmongo-coroutine:4.9.0")
 
 }
