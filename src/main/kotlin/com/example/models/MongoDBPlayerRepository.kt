@@ -21,7 +21,7 @@ class MongoDBPlayerRepository : PlayerRepository {
     }
 
     override fun updatePlayerScore(player: Player) {
-        playersCollection.updateOneById(player.id, player.score)
+        playersCollection.updateOne(Player::id eq player.id, setValue(Player::score, player.score))
     }
 
     override fun getPlayerById(id: Int): Player? {
