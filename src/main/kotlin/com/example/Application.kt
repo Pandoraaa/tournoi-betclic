@@ -6,9 +6,6 @@ import com.example.plugins.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.koin.core.context.startKoin
-import org.koin.ktor.plugin.Koin
-import org.koin.logger.slf4jLogger
-
 
 fun main(args: Array<String>) {
     startKoin {
