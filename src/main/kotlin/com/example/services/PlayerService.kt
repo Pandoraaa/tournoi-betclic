@@ -1,19 +1,16 @@
 package com.example.services
 
 import com.example.models.Player
-import com.example.models.PlayerDto
 import com.example.models.PlayerRepository
-import com.mongodb.client.MongoClient
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.UUID
 
 class PlayerService : KoinComponent {
-    private val client: MongoClient by inject()
-    private val repository: PlayerRepository = PlayerRepository(client)
+    val repository: PlayerRepository by inject()
 
-    fun getAllPlayers(){
-        repository.getAll()
+    fun getAllPlayersByScore(){
+        repository.getAll().sortedBy { it.score }
     }
 
     fun getPlayer(id: String): Player {
