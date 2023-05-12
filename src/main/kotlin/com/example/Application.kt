@@ -4,6 +4,7 @@ import com.example.di.mainModule
 import io.ktor.server.application.*
 import com.example.plugins.*
 import org.koin.ktor.plugin.Koin
+import org.koin.logger.slf4jLogger
 
 
 fun main(args: Array<String>): Unit =
@@ -18,7 +19,9 @@ fun Application.module() {
 fun Application.main() {
     // Install Ktor features
     install(Koin) {
+        slf4jLogger()
         modules(mainModule)
     }
 }
+
 

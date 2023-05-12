@@ -22,13 +22,15 @@ fun Route.playerRouting() {
         }
 
         post {
-            val player = call.receive<Player>()
+            val request = call.receive<PlayerDto>()
+            val player = request.toPlayer()
             playerService.addPlayer(player)
         }
 
-        put {
-            val player = call.receive<Player>()
-            playerService.updatePlayerScore(player.id, player.score)
+        put("/{id}") {
+            val playerId = call.parameters["id"]?: return@put call.respond(HttpStatusCode.BadRequest)
+            val player = call.receive<PlayerDto>()
+            playerService.updatePlayerScore(playerId, player.score)
         }
         delete {
             playerService.deleteAllPlayers()

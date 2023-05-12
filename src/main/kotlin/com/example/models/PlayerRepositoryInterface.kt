@@ -20,7 +20,7 @@ interface PlayerRepositoryInterface<T> {
 
     fun getAll(): List<T> {
         return try {
-            // TODO sorting
+            // TODO sorting error
             // val res = collection.find().sort({"score":-1})
             val res = collection.find()
             res.asIterable().map { it }
