@@ -20,7 +20,9 @@ interface PlayerRepositoryInterface<T> {
 
     fun getAll(): List<T> {
         return try {
-            val res = collection.find().sort({"score":-1})
+            // TODO sorting
+            // val res = collection.find().sort({"score":-1})
+            val res = collection.find()
             res.asIterable().map { it }
         } catch (t: Throwable) {
             throw Exception("Cannot get all players")
