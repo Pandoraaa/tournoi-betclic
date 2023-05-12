@@ -1,14 +1,15 @@
 package com.example.models
 
-interface PlayerRepository {
+import com.mongodb.client.MongoClient
+import com.mongodb.client.MongoCollection
+import org.litote.kmongo.*
 
-    fun addPlayer(player: Player)
+class PlayerRepository(client: MongoClient) : PlayerRepositoryInterface<Player> {
+    override lateinit var col: MongoCollection<Player>
 
-    fun getAllPlayersByScore(): Any
+    init {
+        val database = client.getDatabase("betclic")
+        col = database.getCollection<Player>("player")
+    }
 
-    fun updatePlayerScore(player: Player)
-
-    fun getPlayerById(id: Int): Player?
-
-    fun deleteAllPlayers()
 }

@@ -1,7 +1,10 @@
 package com.example
 
+import com.example.di.mainModule
 import io.ktor.server.application.*
 import com.example.plugins.*
+import org.koin.ktor.plugin.Koin
+
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -11,3 +14,11 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
 }
+
+fun Application.main() {
+    // Install Ktor features
+    install(Koin) {
+        modules(mainModule)
+    }
+}
+

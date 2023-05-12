@@ -1,10 +1,11 @@
 package com.example.models
 
 import kotlinx.serialization.Serializable
+import java.util.UUID
 
 @Serializable
 data class Player(
-    val id : Int,
+    val id : String,
     val name: String,
     val score: Int = 0,
     val ranking: Int = 1
