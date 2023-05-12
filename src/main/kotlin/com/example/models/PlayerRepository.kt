@@ -5,11 +5,11 @@ import com.mongodb.client.MongoCollection
 import org.litote.kmongo.*
 
 class PlayerRepository(client: MongoClient) : PlayerRepositoryInterface<Player> {
-    override lateinit var col: MongoCollection<Player>
+    override lateinit var collection: MongoCollection<Player>
 
     init {
         val database = client.getDatabase("betclic")
-        col = database.getCollection<Player>("player")
+        collection = database.getCollection<Player>("player")
     }
 
 }
