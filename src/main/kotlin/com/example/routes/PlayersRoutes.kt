@@ -1,6 +1,7 @@
 package com.example.routes
 
 import com.example.models.*
+import com.example.requests.ScoreUpdateRequest
 import com.example.services.PlayerService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -28,8 +29,8 @@ fun Route.playerRouting() {
 
         put("/{id}") {
             val playerId = call.parameters["id"]?: return@put call.respond(HttpStatusCode.BadRequest)
-            val player = call.receive<Player>()
-            playerService.updatePlayerScore(playerId, player.score)
+            val playerScoreToUpdate = call.receive<ScoreUpdateRequest>()
+            playerService.updatePlayerScore(playerId, playerScoreToUpdate.score)
         }
         delete {
             playerService.deleteAllPlayers()
