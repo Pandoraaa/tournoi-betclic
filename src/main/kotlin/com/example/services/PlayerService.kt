@@ -10,7 +10,7 @@ class PlayerService : KoinComponent {
     val repository: PlayerRepository by inject()
 
     fun getAllPlayersByScore(){
-        repository.getAll().sortedBy { it.score }
+        repository.getAll().sortedByDescending { it.score }
     }
 
     fun getPlayer(id: String): Player {
@@ -28,12 +28,12 @@ class PlayerService : KoinComponent {
 
     fun updatePlayerScore(id: String, score: Int): Player {
         val player = repository.getById(id)
-        val updates = Player(
+        val playerUpdates = Player(
             id = player.id,
             name = player.name,
             score = score
         )
-        return repository.update(updates)
+        return repository.update(playerUpdates)
     }
 
     fun deleteAllPlayers(){
